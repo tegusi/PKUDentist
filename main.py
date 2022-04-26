@@ -1,7 +1,10 @@
 # -*- coding: utf-8
+import os
+os.environ['WDM_SSL_VERIFY'] = '0'
 import env_check
 from configparser import ConfigParser
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 from func import *
 import warnings
 import sys
@@ -40,8 +43,8 @@ def go(config):
 
 
 if __name__ == '__main__':
-
-    driver_pjs = webdriver.PhantomJS(executable_path=sys_path(browser="phantomjs"))
+    # driver_pjs = webdriver.Chrome(sys_path('chromedriver'))
+    # driver_pjs = webdriver.PhantomJS(executable_path=sys_path(browser="phantomjs"))
 
     # chrome_options = Options()
     # chrome_options.add_argument("--headless")
@@ -49,6 +52,16 @@ if __name__ == '__main__':
     #         options=chrome_options,
     #         executable_path=sys_path(browser="chromedriver"),
     #         service_args=['--ignore-ssl-errors=true', '--ssl-protocol=TLSv1'])
+    chrome_options = Options()
+    chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+    # chrome_options.add_argument("--headless")
+    driver_pjs = webdriver.Chrome(
+            # executable_path=ChromeDriverManager().install(),
+            executable_path='C:\\Users\\萨音\\.wdm\\drivers\\chromedriver\\win32\\100.0.4896.60\\chromedriver.exe',
+            options=chrome_options,
+            service_args=['--ignore-ssl-errors=true', '--ssl-protocol=TLSv1'])
+    driver_pjs.switch_to.frame(0)
+    fill_appointment(driver_pjs)
     print('Driver Launched\n')
 
     lst_conf = sorted([
