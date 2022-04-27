@@ -12,19 +12,6 @@ import os
 import re
 warnings.filterwarnings('ignore')
 
-
-def sys_path(browser):
-    path = f'./{browser}/bin/'
-    if sys.platform.startswith('win'):
-        return path + f'{browser}.exe'
-    elif sys.platform.startswith('linux'):
-        return path + f'{browser}-linux'
-    elif sys.platform.startswith('darwin'):
-        return path + f'{browser}'
-    else:
-        raise Exception('暂不支持该系统')
-
-
 def go(config):
     conf = ConfigParser()
     conf.read(config, encoding='utf8')
